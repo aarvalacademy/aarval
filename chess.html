@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chess Program – Aarval Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #4caf7d;
+    --gold: #f5a623;
+    --teal: #0f9b8e;
+    --light: #f8f9fa;
+    --text: #333;
+    --muted: #666;
+    --border: #eee;
+    --hero-bg: #0d0d1a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Nunito',sans-serif; color:var(--text); background:var(--light); }
+
+  nav { background:var(--primary); padding:0 5%; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.3); }
+  .nav-logo { display:flex; align-items:center; gap:10px; padding:11px 0; text-decoration:none; }
+  .nav-logo img { width:44px; height:44px; object-fit:contain; border-radius:10px;  }
+  .logo-text { color:white; font-family:'Poppins',sans-serif; font-size:17px; font-weight:700; line-height:1.15; }
+  .logo-text span { color:var(--gold); font-size:11px; font-weight:600; display:block; letter-spacing:0.5px; }
+  .nav-links { display:flex; gap:6px; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.8); text-decoration:none; padding:8px 14px; border-radius:6px; font-size:14px; font-weight:600; transition:all 0.2s; }
+  .nav-links a:hover { background:rgba(255,255,255,0.1); color:white; }
+  .nav-cta { background:var(--accent)!important; color:white!important; padding:8px 18px!important; }
+
+  /* HERO */
+  .chess-hero { position:relative; height:80vh; min-height:480px; display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.4); }
+  .hero-grad { position:absolute; inset:0; background:linear-gradient(to top, rgba(13,13,26,1) 0%, rgba(13,13,26,0.55) 50%, transparent 100%); }
+  .hero-content { position:relative; z-index:2; padding:0 5% 60px; max-width:640px; }
+  .breadcrumb { font-size:13px; color:rgba(255,255,255,0.45); margin-bottom:16px; }
+  .breadcrumb a { color:rgba(255,255,255,0.45); text-decoration:none; }
+  .breadcrumb a:hover { color:var(--gold); }
+  .hero-tag { display:inline-block; background:var(--accent); color:white; padding:8px 20px; border-radius:20px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; box-shadow:0 4px 16px rgba(76,175,125,0.25); }
+  .chess-hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:800; color:white; line-height:1.12; margin-bottom:14px; }
+  .chess-hero h1 em { color:var(--gold); font-style:normal; }
+  .hero-sub { font-size:16px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:26px; max-width:480px; }
+  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-primary { background:var(--accent); color:white; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; transition:all 0.2s; display:inline-block; }
+  .btn-primary:hover { background:#3d9968; transform:translateY(-1px); }
+  .btn-secondary { background:transparent; color:white; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; border:2px solid rgba(255,255,255,0.7); transition:all 0.2s; display:inline-block; }
+  .btn-secondary:hover { border-color:white; }
+
+  /* LEVELS */
+  .levels-bar { background:white; border-bottom:1px solid var(--border); padding:14px 5%; display:flex; gap:8px; flex-wrap:wrap; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .lev-lbl { font-size:12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-right:4px; }
+  .lev { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid; }
+  .lev.hi { background:#f0faf5; border-color:rgba(76,175,125,0.25); color:#2d6b4f; }
+  .lev.lo { background:transparent; border-color:var(--border); color:var(--muted); }
+
+  /* SECTIONS */
+  section { padding:72px 5%; }
+  .section-label { text-align:center; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+  .section-title { font-family:'Poppins',sans-serif; font-size:clamp(24px,3.5vw,36px); font-weight:700; text-align:center; color:var(--primary); margin-bottom:14px; line-height:1.25; }
+  .section-sub { text-align:center; color:var(--muted); font-size:15px; max-width:520px; margin:0 auto 48px; line-height:1.6; }
+
+  /* ABOUT */
+  .about-sec { background:white; }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
+  .about-left h2 { font-family:'Poppins',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--primary); margin-bottom:16px; line-height:1.3; }
+  .about-left h2 em { color:var(--accent); font-style:normal; }
+  .about-left p { color:var(--muted); font-size:15px; line-height:1.75; margin-bottom:14px; }
+  .meta-pills { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .meta-pill { background:#f0faf5; border:1px solid rgba(76,175,125,0.15); color:#2d6b4f; padding:7px 16px; border-radius:20px; font-size:13px; font-weight:700; }
+  .photo-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .photo-grid img { width:100%; border-radius:12px; object-fit:cover; height:190px; border:1px solid var(--border); }
+  .photo-grid img:first-child { grid-column:1/-1; height:250px; }
+
+  /* GAINS */
+  .gains-sec { background:var(--light); }
+  .gains-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; max-width:1100px; margin:0 auto; }
+  .gain-card { background:white; border:1.5px solid var(--border); border-radius:14px; padding:24px 20px; display:flex; gap:14px; transition:all 0.2s; }
+  .gain-card:hover { border-color:rgba(76,175,125,0.2); box-shadow:0 8px 24px rgba(0,0,0,0.07); transform:translateY(-3px); }
+  .g-icon { width:42px; height:42px; background:#f0faf5; border:1px solid rgba(76,175,125,0.15); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .g-text h4 { font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; color:var(--primary); margin-bottom:5px; }
+  .g-text p { font-size:13px; color:var(--muted); line-height:1.55; }
+
+  /* HOW */
+  .how-sec { background:white; }
+  .how-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
+  .how-left h2 { font-family:'Poppins',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--primary); margin-bottom:24px; line-height:1.3; }
+  .how-left h2 em { color:var(--accent); font-style:normal; }
+  .how-list { list-style:none; }
+  .how-list li { color:var(--text); font-size:14px; padding:11px 0; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:flex-start; line-height:1.55; }
+  .how-list li:last-child { border:none; }
+  .how-list li::before { content:'→'; color:var(--accent); font-weight:800; flex-shrink:0; margin-top:1px; }
+  .how-photo { position:relative; }
+  .how-photo img { width:100%; border-radius:16px; object-fit:cover; height:400px; border:1px solid var(--border); }
+  .photo-badge { position:absolute; bottom:16px; left:16px; background:white; font-weight:800; border:1px solid rgba(76,175,125,0.2); color:#2d6b4f; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+
+  /* FORMAT */
+  .format-sec { background:var(--light); }
+  .format-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1000px; margin:0 auto; }
+  .f-card { background:white; border:1.5px solid var(--border); border-radius:14px; padding:32px 28px; }
+  .f-card.hi { border-color:rgba(76,175,125,0.2); }
+  .f-card h3 { font-family:'Poppins',sans-serif; font-size:17px; font-weight:700; color:var(--primary); margin-bottom:20px; }
+  .f-rows { list-style:none; }
+  .f-rows li { display:flex; gap:12px; font-size:13px; color:var(--muted); padding:10px 0; border-bottom:1px solid var(--border); line-height:1.5; }
+  .f-rows li:last-child { border:none; }
+  .f-rows li b { color:var(--primary); min-width:100px; flex-shrink:0; font-weight:700; }
+  .check { color:var(--teal); font-weight:800; flex-shrink:0; }
+
+  /* PROMISE */
+  .promise-sec { background:var(--primary); }
+  .promise-sec .section-title { color:white; }
+  .promise-sec .section-sub { color:rgba(255,255,255,0.5); }
+  .promise-sec .section-label { color:var(--gold); }
+  .promise-row { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto; }
+  .p-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:28px 24px; text-align:left; flex:1; min-width:200px; max-width:260px; transition:all 0.2s; }
+  .p-card:hover { background:rgba(232,160,0,0.08); border-color:rgba(76,175,125,0.15); }
+  .p-card span { font-size:30px; margin-bottom:14px; display:block; }
+  .p-card h4 { font-family:'Poppins',sans-serif; font-size:15px; font-weight:700; color:white; margin-bottom:6px; }
+  .p-card p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.55; }
+
+  /* CTA */
+  .cta-sec { background:white; text-align:center; }
+  .cta-sec h2 { font-family:'Poppins',sans-serif; font-size:clamp(24px,3.5vw,36px); font-weight:700; color:var(--primary); margin-bottom:10px; }
+  .cta-sec h2 em { color:var(--accent); font-style:normal; }
+  .cta-sec p { color:var(--muted); font-size:15px; margin-bottom:28px; }
+  .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .cta-btn-y { background:var(--accent); color:white; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; transition:all 0.2s; display:inline-block; }
+  .cta-btn-y:hover { background:#3d9968; transform:translateY(-1px); }
+  .cta-btn-o { background:#f0f0f0; color:var(--primary); padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; border:1.5px solid #ccc; transition:all 0.2s; display:inline-block; }
+  .cta-btn-o:hover { border-color:var(--accent); color:var(--accent); background:#f0faf5; }
+  .cta-meta { margin-top:20px; font-size:14px; color:var(--muted); }
+  .cta-meta a { color:var(--accent); font-weight:700; text-decoration:none; }
+
+  .wa-float { position:fixed; bottom:26px; right:26px; z-index:999; background:#25d366; color:white; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 16px rgba(37,211,102,0.4); transition:transform 0.2s; }
+  .wa-float:hover { transform:scale(1.1); }
+
+  footer { background:#0a0a18; color:rgba(255,255,255,0.5); padding:28px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  footer p { font-size:13px; }
+  footer a { color:var(--gold); text-decoration:none; }
+  .foot-links { display:flex; gap:16px; }
+  .foot-links a { color:rgba(255,255,255,0.5); font-size:13px; font-weight:600; text-decoration:none; transition:color 0.2s; }
+  .foot-links a:hover { color:var(--gold); }
+
+  @media(max-width:768px) { .about-grid,.how-grid,.format-grid { grid-template-columns:1fr; } .nav-links { display:none; } .chess-hero { height:auto; } .hero-content { padding:120px 5% 48px; } .photo-grid img { height:150px; } .photo-grid img:first-child { height:200px; } .how-photo img { height:260px; } .promise-row { flex-direction:column; align-items:center; } }
+</style>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/919445672928" target="_blank">💬</a>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="logo.png" alt="Aarval Academy">
+    <div class="logo-text">Aarval Academy<span>Academy of Chess & Learning</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#programs">Programs</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="https://myaarval.aarvalacademy.in" target="_blank" class="nav-classroom">My Aarval</a></li>
+    <li><a href="index.html#contact" class="nav-cta" style="background:#f5c800!important;color:#0a0a0f!important">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<div class="chess-hero">
+  <img class="hero-img" src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=1280&q=80" alt="Chess at Aarval Academy">
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> › Chess Program</div>
+    <div class="hero-tag">♟ Flagship Program</div>
+    <h1>Chess That Builds<br><em>Sharp Minds</em> &<br>Future Champions</h1>
+    <p class="hero-sub">A slow, strong, and systematic approach understanding over memorization, confidence over pressure, growth over speed.</p>
+    <div class="hero-btns">
+      <a href="index.html#contact" class="btn-primary">Book Free Demo Class</a>
+      <a href="tel:9445672928" class="btn-secondary">📞 Call Us</a>
+    </div>
+  </div>
+</div>
+
+<div class="levels-bar">
+  <span class="lev-lbl">Levels:</span>
+  <span class="lev hi">Primary Chess (Age 4+)</span>
+  <span class="lev lo">Beginner</span>
+  <span class="lev lo">Intermediate</span>
+  <span class="lev lo">Advanced</span>
+  <span class="lev lo">Online & Offline</span>
+</div>
+
+<section class="about-sec">
+  <div class="about-grid">
+    <div class="about-left">
+      <p class="section-label" style="text-align:left;">About the Program</p>
+      <h2>Chess Is More Than<br>a Game at <em>Aarval</em></h2>
+      <p>At Aarval Academy, chess is a powerful tool to build thinking minds. We nurture young learners with patience, precision, and purpose helping every child grow at their own pace.</p>
+      <p>Our coaches focus on understanding over memorization and long-term growth over shortcuts. Every session is a step towards becoming a stronger, more confident thinker.</p>
+      <div class="meta-pills">
+        <span class="meta-pill">Age 5+</span>
+        <span class="meta-pill">Online & Offline</span>
+        <span class="meta-pill">Chennai</span>
+        <span class="meta-pill">Small Batches</span>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <img src="https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=800&q=80" alt="Chess class at Aarval Academy">
+      <img src="https://images.unsplash.com/photo-1560174038-594a4f8b4b4b?w=400&q=80" alt="Kids playing chess">
+      <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=400&q=80" alt="Chess coaching session">
+    </div>
+  </div>
+</section>
+
+<section class="gains-sec">
+  <p class="section-label">Benefits</p>
+  <h2 class="section-title">What Children Gain Through Chess</h2>
+  <p class="section-sub">Every session builds skills that go far beyond the board.</p>
+  <div class="gains-grid">
+    <div class="gain-card"><div class="g-icon">🧠</div><div class="g-text"><h4>Logical Thinking</h4><p>Chess trains the brain to think ahead, evaluate options, and make smart decisions.</p></div></div>
+    <div class="gain-card"><div class="g-icon">🎯</div><div class="g-text"><h4>Focus & Patience</h4><p>Every move requires concentration children learn to stay calm under pressure.</p></div></div>
+    <div class="gain-card"><div class="g-icon">⚔️</div><div class="g-text"><h4>Threat Recognition</h4><p>Identifying threats and opportunities a skill that goes far beyond the board.</p></div></div>
+    <div class="gain-card"><div class="g-icon">💾</div><div class="g-text"><h4>Improved Memory</h4><p>Patterns, openings, and endgames strengthen memory and problem-solving ability.</p></div></div>
+    <div class="gain-card"><div class="g-icon">🏆</div><div class="g-text"><h4>Confidence & Resilience</h4><p>Handling wins, losses, and challenges builds real emotional strength.</p></div></div>
+    <div class="gain-card"><div class="g-icon">♟️</div><div class="g-text"><h4>Board Awareness</h4><p>Strong endgame understanding and full board awareness develop steadily.</p></div></div>
+  </div>
+</section>
+
+<section class="how-sec">
+  <div class="how-grid">
+    <div class="how-left">
+      <p class="section-label" style="text-align:left;">Methodology</p>
+      <h2>How We <em>Teach</em> Chess</h2>
+      <ul class="how-list">
+        <li>Minimal-distraction learning environment</li>
+        <li>Teaching tailored to each child's current knowledge and pace</li>
+        <li>Concept-based coaching no rushed shortcuts</li>
+        <li>Regular practice games in a pressure-free setting</li>
+        <li>Fun challenges to keep children engaged and motivated</li>
+        <li>Personalized guidance based on each child's progress</li>
+        <li>Weekly confirmations to ensure full attendance</li>
+        <li>Parent updates on progress, strengths, and areas to improve</li>
+        <li>📱 Students can track their progress, view syllabus & practice puzzles anytime</li>
+      </ul>
+    </div>
+    <div class="how-photo">
+      <img src="https://images.unsplash.com/photo-1580541832626-2a7131ee809f?w=800&q=80" alt="Chess coaching">
+      <div class="photo-badge">⭐ Expert Coaches · Small Batches · Personal Attention</div>
+    </div>
+  </div>
+</section>
+
+<section class="format-sec">
+  <p class="section-label">Program Details</p>
+  <h2 class="section-title">Class Format & Demo Session</h2>
+  <p class="section-sub">Everything you need to know before enrolling.</p>
+  <div class="format-grid">
+    <div class="f-card">
+      <h3>🗓️ Class Format</h3>
+      <ul class="f-rows">
+        <li><b>Age Group</b> 5 years and above</li>
+        <li><b>Mode</b> Online & Offline classes</li>
+        <li><b>Batch Size</b> Small groups for better personal attention</li>
+        <li><b>Schedule</b> 7 Days · Weekday & Weekend · Flexible time slots</li>
+        <li><b>Location</b> Chennai centers + Online anywhere</li>
+      </ul>
+    </div>
+    <div class="f-card hi">
+      <h3>🎯 Demo Session Includes</h3>
+      <ul class="f-rows">
+        <li><span class="check">✓</span> Friendly introduction to chess concepts</li>
+        <li><span class="check">✓</span> Activities tailored to your child's current level</li>
+        <li><span class="check">✓</span> A fun practice game in a relaxed environment</li>
+        <li><span class="check">✓</span> Coach assessment of your child's learning style</li>
+        <li><span class="check">✓</span> Q&A session for parents</li>
+        <li><span style="color:var(--accent);font-weight:800">★</span> <span style="color:var(--accent);font-weight:700">100% Free No commitment needed</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="promise-sec">
+  <p class="section-label">Our Promise</p>
+  <h2 class="section-title">We Train Them to Think Deep,<br>Play Smart & Improve Steadily</h2>
+  <p class="section-sub">We don't push children to play fast. Every child's journey is unique and we honour that.</p>
+  <div class="promise-row">
+    <div class="p-card"><span>🐢</span><h4>No Rush, Ever</h4><p>We never push for speed. Deep understanding always comes first.</p></div>
+    <div class="p-card"><span>📈</span><h4>Steady Progress</h4><p>Consistent, measurable improvement tracked and shared with parents.</p></div>
+    <div class="p-card"><span>❤️</span><h4>Child-First</h4><p>Every child feels seen, encouraged, and excited to come back.</p></div>
+  </div>
+</section>
+
+<section class="cta-sec">
+  <h2>Ready to Start the <em>Chess Journey?</em></h2>
+  <p>Book a free demo class no payment, no pressure. Just chess.</p>
+  <div class="cta-btns">
+    <a href="index.html#contact" class="cta-btn-y">Book Free Demo Class</a>
+    <a href="https://wa.me/919445672928" target="_blank" class="cta-btn-o">💬 WhatsApp Us</a>
+  </div>
+  <div class="cta-meta">📞 <a href="tel:9445672928">944-567-2928</a> &nbsp;·&nbsp; 📍 Chennai Offline & Online</div>
+</section>
+
+<footer>
+  <p>© 2026 Aarval Academy · <a href="https://aarvalacademy.in">aarvalacademy.in</a></p>
+  <div class="foot-links">
+    <a href="https://www.facebook.com/profile.php?id=61584329581255" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/aarval_academy/" target="_blank">Instagram</a>
+    <a href="https://wa.me/919445672928" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+
+</body>
+</html>

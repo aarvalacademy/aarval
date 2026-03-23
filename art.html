@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Arts – Aarval Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--primary:#1a1a2e;--accent:#4caf7d;--gold:#f5a623;--teal:#0f9b8e;--light:#f8f9fa;--text:#333;--muted:#666;--border:#eee;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--light)}
+  nav{background:var(--primary);padding:0 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.3)}
+  .nav-logo{display:flex;align-items:center;gap:10px;padding:11px 0;text-decoration:none}
+  .nav-logo img{width:44px;height:44px;object-fit:contain;border-radius:10px}
+  .logo-text{color:white;font-family:'Poppins',sans-serif;font-size:17px;font-weight:700;line-height:1.15}
+  .logo-text span{color:#4caf7d;font-size:11px;font-weight:700;display:block;letter-spacing:0.5px}
+  .nav-links{display:flex;gap:6px;list-style:none}
+  .nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;padding:8px 14px;border-radius:6px;font-size:14px;font-weight:600;transition:all 0.2s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{background:var(--accent)!important;color:white!important;font-weight:800!important;border-radius:6px}
+
+  .hero{position:relative;min-height:75vh;display:flex;align-items:flex-end;overflow:hidden}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.4)}
+  .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,26,1) 0%,rgba(13,13,26,0.55) 50%,transparent 100%)}
+  .hero-content{position:relative;z-index:2;padding:0 5% 64px;max-width:640px}
+  .breadcrumb{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:16px}
+  .breadcrumb a{color:rgba(255,255,255,0.45);text-decoration:none}
+  .breadcrumb a:hover{color:var(--gold)}
+  .hero-tag{display:inline-block;background:var(--accent);color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;box-shadow:0 4px 16px rgba(76,175,125,0.25)}
+  .hero h1{font-family:'Poppins',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:800;color:white;line-height:1.12;margin-bottom:14px}
+  .hero h1 em{color:var(--gold);font-style:normal}
+  .hero-sub{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:26px;max-width:500px}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-y{background:var(--accent);color:white;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:800;text-decoration:none;transition:all 0.2s;display:inline-block}
+  .btn-y:hover{background:#3d9968;transform:translateY(-1px)}
+  .btn-o{background:transparent;color:white;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;border:2px solid rgba(255,255,255,0.6);transition:all 0.2s;display:inline-block}
+
+  section{padding:72px 5%}
+  .section-label{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .section-title{font-family:'Poppins',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;text-align:center;color:var(--primary);margin-bottom:14px;line-height:1.25}
+  .section-sub{text-align:center;color:var(--muted);font-size:15px;max-width:520px;margin:0 auto 48px;line-height:1.6}
+
+  .about-sec{background:white}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto}
+  .about-img img{width:100%;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.1)}
+  .about-text .section-label{text-align:left}
+  .about-text h2{font-family:'Poppins',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.3}
+  .about-text h2 em{color:var(--accent);font-style:normal}
+  .about-text p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:14px}
+
+  .vm-sec{background:var(--light)}
+  .vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto}
+  .vm-card{background:white;border-radius:16px;padding:32px 28px;border:1.5px solid var(--border)}
+  .vm-card.vision{border-top:4px solid var(--accent)}
+  .vm-card.mission{border-top:4px solid var(--teal)}
+  .vm-card h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px}
+  .vm-card.vision h3{color:var(--accent)}
+  .vm-card.mission h3{color:var(--teal)}
+  .vm-card p{color:var(--muted);font-size:14px;line-height:1.75}
+  .vm-aims{margin-top:12px;list-style:none}
+  .vm-aims li{font-size:13px;color:var(--text);padding:4px 0;display:flex;align-items:center;gap:8px}
+  .vm-aims li::before{content:'✓';color:var(--teal);font-weight:800}
+
+  .outcomes-sec{background:white}
+  .outcomes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1000px;margin:0 auto}
+  .outcome-card{background:var(--light);border-radius:14px;padding:26px 22px;border:1.5px solid var(--border);transition:all 0.2s}
+  .outcome-card:hover{border-color:rgba(76,175,125,0.2);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.07)}
+  .outcome-icon{font-size:36px;margin-bottom:12px;display:block}
+  .outcome-card h4{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px}
+  .outcome-card p{font-size:13px;color:var(--muted);line-height:1.55}
+
+  .parent-sec{background:var(--light)}
+  .parent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px;margin:0 auto}
+  .parent-card{background:white;border-radius:14px;padding:26px 22px;border:1.5px solid var(--border);transition:all 0.2s}
+  .parent-card:hover{border-color:rgba(15,155,142,0.3)}
+  .parent-card h4{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px}
+  .parent-card p{font-size:13px;color:var(--muted);line-height:1.6}
+
+  .cta-sec{background:var(--primary);text-align:center;padding:72px 5%}
+  .cta-sec h2{font-family:'Poppins',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:white;margin-bottom:10px}
+  .cta-sec h2 em{color:var(--gold);font-style:normal}
+  .cta-sec p{color:rgba(255,255,255,0.55);font-size:15px;margin-bottom:28px}
+  .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .cta-meta{margin-top:20px;font-size:14px;color:rgba(255,255,255,0.45)}
+  .cta-meta a{color:var(--gold);font-weight:700;text-decoration:none}
+
+  .wa-float{position:fixed;bottom:26px;right:26px;z-index:999;background:#25d366;color:white;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,0.4);transition:transform 0.2s}
+  .wa-float:hover{transform:scale(1.1)}
+  footer{background:#0a0a18;color:rgba(255,255,255,0.5);padding:28px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer p{font-size:13px}
+  footer a{color:var(--gold);text-decoration:none}
+  .foot-links{display:flex;gap:16px}
+  .foot-links a{color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;text-decoration:none;transition:color 0.2s}
+  .foot-links a:hover{color:var(--gold)}
+  @media(max-width:768px){.about-grid,.vm-grid{grid-template-columns:1fr}.nav-links{display:none}.hero{min-height:0}.hero-content{padding:120px 5% 48px}}
+</style>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/919445672928" target="_blank">💬</a>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="logo.png" alt="Aarval Academy">
+    <div class="logo-text">Aarval Academy<span>Academy of Chess & Learning</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#programs">Programs</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="https://myaarval.aarvalacademy.in" target="_blank" class="nav-classroom">My Aarval</a></li>
+    <li><a href="index.html#contact" class="nav-cta" style="background:#f5c800!important;color:#0a0a0f!important">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <img class="hero-img" src="art-hero.png" alt="Little Arts">
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> › Little Arts</div>
+    <div class="hero-tag">🎨 Little Arts Program</div>
+    <h1>Where Every Child<br>Discovers Their <em>Inner Artist</em></h1>
+    <p class="hero-sub">Creative art classes designed to help children explore imagination, colours, and creativity in a fun, supportive learning environment.</p>
+    <div class="hero-btns">
+      <a href="index.html#contact" class="btn-y">Book Free Demo Class</a>
+      <a href="tel:9445672928" class="btn-o">📞 Call Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-sec">
+  <div class="about-grid">
+    <div class="about-img"><img src="art-hero.png" alt="Little Arts Program"></div>
+    <div class="about-text">
+      <p class="section-label">About the Program</p>
+      <h2>Aarval <em>Little Arts</em></h2>
+      <p>Little Arts is a creative art program at Aarval Academy where children explore the joy of drawing, painting, and crafting in a warm, encouraging environment.</p>
+      <p>We believe every child is an artist. Our program helps them discover that building confidence, creativity, and a lifelong love for artistic expression.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISION MISSION -->
+<section class="vm-sec">
+  <p class="section-label">Our Purpose</p>
+  <h2 class="section-title">Vision & Mission</h2>
+  <div class="vm-grid">
+    <div class="vm-card vision">
+      <h3>🌟 Our Vision</h3>
+      <p>To inspire young minds to explore creativity and imagination through art, helping children develop confidence, curiosity, and a lifelong love for artistic expression.</p>
+    </div>
+    <div class="vm-card mission">
+      <h3>🎯 Our Mission</h3>
+      <p>To provide engaging, structured art classes where children learn fundamental techniques, experiment with colours and materials, and express their ideas freely.</p>
+      <ul class="vm-aims">
+        <li>Creative thinkers</li>
+        <li>Confident self-expression</li>
+        <li>Strong artistic foundation</li>
+        <li>Joyful learning through art</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING OUTCOMES -->
+<section class="outcomes-sec">
+  <p class="section-label">What Kids Gain</p>
+  <h2 class="section-title">Learning Outcomes</h2>
+  <p class="section-sub">Every class builds skills that go far beyond the canvas.</p>
+  <div class="outcomes-grid">
+    <div class="outcome-card"><span class="outcome-icon">💡</span><h4>Creative Thinking</h4><p>Children develop imagination and creative expression through art activities.</p></div>
+    <div class="outcome-card"><span class="outcome-icon">✋</span><h4>Fine Motor Skills</h4><p>Drawing and colouring improve hand control and coordination.</p></div>
+    <div class="outcome-card"><span class="outcome-icon">😊</span><h4>Confidence in Expression</h4><p>Children learn to express their ideas and emotions freely through art.</p></div>
+    <div class="outcome-card"><span class="outcome-icon">🎯</span><h4>Patience & Focus</h4><p>Art activities improve concentration and attention to detail.</p></div>
+  </div>
+</section>
+
+<!-- PARENT ENGAGEMENT -->
+<section class="parent-sec">
+  <p class="section-label">For Parents</p>
+  <h2 class="section-title">Parent Engagement</h2>
+  <p class="section-sub">We keep you involved in your child's creative journey.</p>
+  <div class="parent-grid">
+    <div class="parent-card"><h4>📊 Regular Progress Updates</h4><p>Parents are kept informed about their child's creative development and growth.</p></div>
+    <div class="parent-card"><h4>💬 Parent–Teacher Interaction</h4><p>Opportunities to discuss your child's progress, strengths, and creativity.</p></div>
+    <div class="parent-card"><h4>🏠 Guidance for Home Activities</h4><p>Simple suggestions for art practice at home to reinforce class learning.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <h2>Let Your Child's <em>Creativity Shine!</em></h2>
+  <p>Book a free demo class no payment, no pressure. Just art and fun!</p>
+  <div class="cta-btns">
+    <a href="index.html#contact" class="btn-y">Book Free Demo Class</a>
+    <a href="https://wa.me/919445672928" target="_blank" class="btn-o" style="border-color:rgba(255,255,255,0.4);color:white">💬 WhatsApp Us</a>
+  </div>
+  <div class="cta-meta">📞 <a href="tel:9445672928">944-567-2928</a> &nbsp;·&nbsp; 📍 Chennai Offline & Online</div>
+</section>
+
+<footer>
+  <p>© 2026 Aarval Academy · <a href="https://aarvalacademy.in">aarvalacademy.in</a></p>
+  <div class="foot-links">
+    <a href="https://www.facebook.com/profile.php?id=61584329581255" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/aarval_academy/" target="_blank">Instagram</a>
+    <a href="https://wa.me/919445672928" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+</body>
+</html>

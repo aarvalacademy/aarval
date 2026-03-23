@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarval Academy – Learn. Think. Grow.</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #4caf7d;
+    --gold: #f5a623;
+    --teal: #0f9b8e;
+    --light: #f8f9fa;
+    --text: #333;
+    --muted: #666;
+    --white: #fff;
+    --border: #eee;
+    --hero-bg: #0d0d1a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Nunito',sans-serif; color:var(--text); background:var(--light); }
+
+  nav { background:var(--primary); padding:0 5%; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.3); }
+  .nav-logo { display:flex; align-items:center; gap:10px; padding:11px 0; text-decoration:none; }
+  .nav-logo img { width:56px; height:56px; object-fit:contain; border-radius:0; background:transparent; }
+  .logo-text { color:white; font-family:'Poppins',sans-serif; font-size:17px; font-weight:700; line-height:1.15; }
+  .logo-text span { color:#4caf7d; font-size:11px; font-weight:700; display:block; letter-spacing:0.5px; }
+  .nav-links { display:flex; gap:6px; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.8); text-decoration:none; padding:8px 14px; border-radius:6px; font-size:14px; font-weight:600; transition:all 0.2s; }
+  .nav-links a:hover { background:rgba(255,255,255,0.1); color:white; }
+  .nav-cta { background:var(--accent)!important; color:white!important; padding:8px 18px!important; }
+  .nav-cta:hover { background:#3d9968!important; }
+  .nav-classroom { background:#39ff14!important; color:#0a0a0f!important; border:none!important; padding:8px 18px!important; border-radius:6px!important; font-weight:800!important; font-size:14px!important; }
+  .nav-classroom:hover { background:#2bcc10!important; }
+
+  .hero { background:var(--hero-bg); background-image:radial-gradient(ellipse at 20% 50%,rgba(76,175,125,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(15,155,142,0.12) 0%,transparent 50%); padding:90px 5% 80px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,0.015) 60px,rgba(255,255,255,0.015) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,0.015) 60px,rgba(255,255,255,0.015) 61px); pointer-events:none; z-index:0; }
+  .hero-badge, .hero h1, .hero-sub, .hero-chips, .hero-btns, .modes { position:relative; z-index:1; }
+  .hero-badge { display:inline-block; background:rgba(76,175,125,0.1); border:1px solid rgba(76,175,125,0.25); color:#4caf7d; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; letter-spacing:0.5px; margin-bottom:24px; }
+  .hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(36px,6vw,64px); font-weight:800; color:white; line-height:1.15; margin-bottom:20px; }
+  .hero h1 span { color:var(--accent); }
+  .hero h1 em { color:var(--gold); font-style:normal; }
+  .hero-sub { font-size:18px; color:rgba(255,255,255,0.65); max-width:560px; margin:0 auto 36px; line-height:1.6; }
+  .hero-chips { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:40px; }
+  .chip { background:rgba(245,200,0,0.15); border:1.5px solid rgba(245,200,0,0.4); color:#f5c800; padding:7px 16px; border-radius:20px; font-size:13px; font-weight:700; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .chip:hover { background:rgba(245,200,0,0.25); border-color:#f5c800; color:white; }
+  .hero-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--accent); color:white; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; transition:all 0.2s; display:inline-block; }
+  .btn-primary:hover { background:#3d9968; transform:translateY(-1px); }
+  .btn-secondary { background:transparent; color:white; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; border:2px solid rgba(255,255,255,0.7); transition:all 0.2s; display:inline-block; }
+  .btn-secondary:hover { border-color:white; background:rgba(255,255,255,0.1); }
+  .modes { display:flex; gap:10px; justify-content:center; margin-bottom:28px; flex-wrap:wrap; }
+  .mode-badge { padding:8px 20px; border-radius:20px; font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; }
+  .mode-offline { background:rgba(245,166,35,0.15); border:1px solid rgba(245,166,35,0.4); color:#4caf7d; }
+  .mode-online { background:rgba(15,155,142,0.12); border:1px solid rgba(15,155,142,0.4); color:#4ecdc4; }
+
+  .stats { background:var(--accent); padding:28px 5%; display:flex; justify-content:center; gap:60px; flex-wrap:wrap; }
+  .stat { text-align:center; color:white; }
+  .stat-num { font-family:'Poppins',sans-serif; font-size:32px; font-weight:800; line-height:1; }
+  .stat-label { font-size:13px; opacity:0.85; margin-top:4px; font-weight:600; }
+
+  section { padding:60px 3%; }
+  .section-label { text-align:center; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+  .section-title { font-family:'Poppins',sans-serif; font-size:clamp(26px,4vw,38px); font-weight:700; text-align:center; color:var(--primary); margin-bottom:14px; line-height:1.25; }
+  .section-sub { text-align:center; color:var(--muted); font-size:16px; max-width:540px; margin:0 auto 48px; line-height:1.6; }
+
+  .about { background:white; }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
+  .about-visual { background:var(--primary); border-radius:20px; padding:44px 36px; text-align:center; position:relative; overflow:hidden; }
+  .about-visual::before { content:''; position:absolute; width:200px; height:200px; background:radial-gradient(circle,rgba(76,175,125,0.12),transparent); top:-60px; right:-60px; border-radius:50%; }
+  .about-logo-wrap { display:flex; justify-content:center; margin-bottom:20px; }
+  .about-logo-wrap img { width:130px; height:130px; object-fit:contain; background:transparent; }
+  .about-tagline { font-family:'Poppins',sans-serif; font-size:22px; font-weight:700; color:white; line-height:1.3; margin-bottom:12px; }
+  .about-tagline span { color:var(--gold); }
+  .about-tagline em { color:var(--accent); font-style:normal; }
+  .about-motto { color:rgba(255,255,255,0.5); font-size:13px; letter-spacing:1px; font-weight:600; }
+  .about-content h3 { font-family:'Poppins',sans-serif; font-size:24px; font-weight:700; color:var(--primary); margin-bottom:14px; line-height:1.3; }
+  .about-content p { color:var(--muted); font-size:15px; line-height:1.7; margin-bottom:16px; }
+  .about-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .about-tag { background:#f0faf5; color:#2d6b4f; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:700; border:1px solid rgba(76,175,125,0.12); }
+
+  .programs { background:var(--light); padding:60px 1%; }
+  .programs-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; width:100%; margin:0 auto; }
+  @media(max-width:1100px){ .programs-grid { grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:600px){ .programs-grid { grid-template-columns:1fr; } }
+  .prog-logo { width:70px; height:70px; object-fit:contain; margin-bottom:14px; display:block; }
+  .prog-logo { width:70px; height:70px; object-fit:contain; margin-bottom:14px; display:block; }
+  .prog-card { background:white; border-radius:16px; padding:24px 20px; border:1.5px solid var(--border); transition:all 0.25s; position:relative; overflow:hidden; text-decoration:none; display:block; color:inherit; }
+  .prog-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; }
+  .prog-card.chess::after { background:var(--accent); }
+  .prog-card.phonics::after { background:var(--teal); }
+  .prog-card.art::after { background:var(--gold); }
+  .prog-card.yoga::after { background:#9b59b6; }
+  .prog-card:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,0.10); border-color:transparent; }
+  .prog-icon { font-size:44px; margin-bottom:16px; display:block; }
+  .prog-card h3 { font-family:'Poppins',sans-serif; font-size:16px; font-weight:700; color:var(--primary); margin-bottom:8px; }
+  .prog-age { display:inline-block; background:#f0faf5; color:#2d6b4f; border:1px solid rgba(76,175,125,0.15); padding:3px 10px; border-radius:10px; font-size:12px; font-weight:700; margin-bottom:14px; }
+  .prog-card p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:18px; }
+  .prog-features { list-style:none; margin-bottom:22px; }
+  .prog-features li { font-size:13px; color:#444; padding:4px 0; display:flex; align-items:center; gap:8px; }
+  .prog-features li::before { content:'✓'; color:var(--teal); font-weight:800; }
+  .prog-link { color:var(--accent); font-size:14px; font-weight:700; text-decoration:none; }
+
+  .why { background:var(--primary); }
+  .why .section-title { color:white; }
+  .why .section-sub { color:rgba(255,255,255,0.5); }
+  .why .section-label { color:var(--gold); }
+  .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; max-width:1100px; margin:0 auto; }
+  .why-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:28px 24px; text-align:center; transition:all 0.2s; }
+  .why-card:hover { background:rgba(232,160,0,0.08); border-color:rgba(76,175,125,0.15); transform:translateY(-3px); }
+  .why-icon { font-size:36px; margin-bottom:14px; display:block; }
+  .why-card h4 { font-family:'Poppins',sans-serif; font-size:16px; font-weight:700; color:white; margin-bottom:8px; }
+  .why-card p { color:rgba(255,255,255,0.5); font-size:13px; line-height:1.5; }
+
+  .contact { background:white; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; max-width:1000px; margin:0 auto; align-items:start; }
+  .contact-info h3 { font-family:'Poppins',sans-serif; font-size:24px; font-weight:700; color:var(--primary); margin-bottom:20px; }
+  .contact-item { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+  .contact-icon { width:44px; height:44px; background:#f0faf5; border:1px solid rgba(76,175,125,0.12); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .contact-text strong { display:block; font-size:13px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; }
+  .contact-text span { font-size:15px; color:var(--primary); font-weight:600; }
+  .social-row { display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
+  .social-btn { display:flex; align-items:center; gap:7px; padding:9px 16px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:700; border:2px solid #ddd; transition:all 0.2s; color:#333; background:#f8f8f8; }
+  .social-btn:hover { border-color:var(--accent); color:var(--accent); background:#f0faf5; }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px; }
+  .form-group input, .form-group select { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Nunito',sans-serif; font-size:14px; color:var(--primary); background:var(--light); outline:none; transition:border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus { border-color:var(--accent); }
+  .form-submit { width:100%; background:var(--accent); color:white; border:none; padding:14px; border-radius:8px; font-family:'Poppins',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s; }
+  .form-submit:hover { background:#3d9968; }
+
+  .wa-float { position:fixed; bottom:26px; right:26px; z-index:999; background:#25d366; color:white; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 16px rgba(37,211,102,0.4); transition:transform 0.2s; }
+  .wa-float:hover { transform:scale(1.1); }
+
+  footer { background:#0a0a18; color:rgba(255,255,255,0.6); padding:48px 5% 28px; }
+  .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px; margin-bottom:40px; }
+  .footer-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .footer-logo-row img { width:50px; height:50px; object-fit:contain; border-radius:0; background:transparent; }
+  .footer-brand p { font-size:14px; line-height:1.6; max-width:280px; margin-bottom:16px; }
+  .footer-phone { font-size:18px; font-weight:700; color:white; }
+  .footer-col h4 { color:white; font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; margin-bottom:14px; letter-spacing:0.5px; }
+  .footer-col ul { list-style:none; }
+  .footer-col li { margin-bottom:8px; }
+  .footer-col a { color:rgba(255,255,255,0.55); text-decoration:none; font-size:14px; transition:color 0.2s; }
+  .footer-col a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; font-size:13px; flex-wrap:wrap; gap:10px; }
+
+  @media(max-width:768px) { .about-grid,.contact-grid,.footer-top { grid-template-columns:1fr; } .nav-links { display:none; } .stats { gap:30px; } }
+</style>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/919445672928" target="_blank">💬</a>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="logo.png" alt="Aarval Academy">
+    <div class="logo-text">Aarval Academy<span>Academy of Chess & Learning</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://myaarval.aarvalacademy.in" target="_blank" class="nav-classroom">My Aarval</a></li>
+    <li><a href="#contact" class="nav-cta" style="background:#f5c800!important;color:#0a0a0f!important">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🏫 After-School Activities · Chennai</div>
+  <h1>Where Kids Learn to<br><span>Think</span>, <em>Create</em> & <span>Lead</span></h1>
+  <p class="hero-sub">Expert-guided programs in Chess, Phonics, Art & Yoga for children aged 4–14 years.</p>
+  <div class="modes">
+    <span class="mode-badge mode-offline">📍 Offline – Chennai</span>
+    <span class="mode-badge mode-online">💻 Online – Anywhere</span>
+  </div>
+  <div class="hero-chips">
+    <a href="chess.html" class="chip">♟️ Master Chess Program</a>
+    <a href="phonics.html" class="chip">📖 Fun Phonics</a>
+    <a href="art.html" class="chip">🎨 Little Arts</a>
+    <a href="#contact" class="chip">🪷 Kids Yoga</a>
+  </div>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Book a Free Trial Class</a>
+    <a href="#programs" class="btn-secondary">Explore Programs</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Happy Kids</div></div>
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Programs</div></div>
+  <div class="stat"><div class="stat-num">4–14</div><div class="stat-label">Age Group</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Personal Attention</div></div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-logo-wrap"><img src="logo.png" alt="Aarval Academy"></div>
+      <div class="about-tagline">Building <span>Champions</span> One<br><em>Move</em> at a Time</div>
+      <div class="about-motto">LEARN · THINK · GROW · THE AARVAL WAY</div>
+    </div>
+    <div class="about-content">
+      <p class="section-label" style="text-align:left;margin-bottom:8px;">About Us</p>
+      <h3>A Place Where Every Child's Potential is Nurtured</h3>
+      <p>Aarval Academy is a child-focused learning center where thinking comes before action. We believe that the right after-school activities shape not just skills, but character, confidence, and creativity.</p>
+      <p>Our expert coaches deliver level-wise, patient teaching with personal attention for every child ensuring steady progress and genuine joy in learning.</p>
+      <div class="about-tags">
+        <span class="about-tag">♟️ Chess Coaching</span>
+        <span class="about-tag">📖 Phonics</span>
+        <span class="about-tag">🎨 Art & Craft</span>
+        <span class="about-tag">🧘 Yoga</span>
+        <span class="about-tag">🏆 Tournament Support</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="programs" id="programs">
+  <p class="section-label">Our Programs</p>
+  <h2 class="section-title">After-School Activities for Kids Aged 4–14</h2>
+  <p class="section-sub">Each program is designed to develop skills, confidence, and a love of learning in every child.</p>
+  <div class="programs-grid">
+
+    <a href="chess.html" class="prog-card chess">
+      
+      <span class="prog-icon">♛</span><h3>Master Chess Program</h3>
+      <span class="prog-age">Ages 4–14 · Primary Chess Available</span>
+      <p>Puzzle-based coaching that builds strategic thinking, patience, and focus from beginners to tournament players.</p>
+      <ul class="prog-features">
+        <li>Beginner to Advanced levels</li>
+        <li>Puzzle-based improvement</li>
+        <li>Tournament preparation & support</li>
+        <li>Small batch, personal attention</li>
+        <li>📱 Students can track their progress, view syllabus & practice puzzles anytime</li>
+      </ul>
+      <span class="prog-link">Learn More →</span>
+    </a>
+
+    <a href="phonics.html" class="prog-card phonics">
+      <span class="prog-icon">📖</span><h3>Fun Phonics</h3>
+      <span class="prog-age">Ages 4–10</span>
+      <p>Structured, level-wise phonics program that helps children decode words, improve pronunciation, and become confident readers.</p>
+      <ul class="prog-features">
+        <li>Letter sounds, blends & sight words</li>
+        <li>Builds reading & writing confidence</li>
+        <li>Fun, activity-based learning</li>
+        <li>Level-wise progression</li>
+      </ul>
+      <span class="prog-link">Learn More →</span>
+    </a>
+
+    <a href="art.html" class="prog-card art">
+      <span class="prog-icon">🎨</span><h3>Little Arts</h3>
+      <span class="prog-age">Ages 4–14</span>
+      <p>Drawing, painting, and craft activities that nurture creativity, self-expression, and fine motor skills in every young artist.</p>
+      <ul class="prog-features">
+        <li>Drawing, painting & mixed media</li>
+        <li>Age-appropriate creative projects</li>
+        <li>Builds creativity & fine motor skills</li>
+        <li>Exhibition opportunities</li>
+      </ul>
+      <span class="prog-link">Learn More →</span>
+    </a>
+
+    <div class="prog-card yoga">
+      <span class="prog-icon">🪷</span><h3>Kids Yoga</h3>
+      <span class="prog-age">Ages 4–14</span>
+      <p>Kid-friendly yoga sessions that blend movement, breathing, and mindfulness to help children build body awareness and focus.</p>
+      <ul class="prog-features">
+        <li>Age-appropriate poses & breathing</li>
+        <li>Improves concentration & discipline</li>
+        <li>Reduces stress, builds flexibility</li>
+        <li>Fun and engaging sessions</li>
+      </ul>
+      <span class="prog-link">Enquire Now →</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="why" id="why">
+  <p class="section-label">Why Aarval Academy</p>
+  <h2 class="section-title">The Aarval Difference</h2>
+  <p class="section-sub">We don't just teach activities we build thinking children who are confident, creative, and ready to excel.</p>
+  <div class="why-grid">
+    <div class="why-card"><span class="why-icon">🎯</span><h4>Level-Wise Learning</h4><p>Every child progresses at their own pace with structured curriculum designed for real growth.</p></div>
+    <div class="why-card"><span class="why-icon">👤</span><h4>Personal Attention</h4><p>Small batch sizes ensure every child gets the individual focus they deserve.</p></div>
+    <div class="why-card"><span class="why-icon">🏆</span><h4>Tournament Support</h4><p>Preparation, guidance, and support for chess competitions and tournaments.</p></div>
+    <div class="why-card"><span class="why-icon">💻</span><h4>Online & Offline</h4><p>Attend from our Chennai center or from home the choice is yours.</p></div>
+    <div class="why-card"><span class="why-icon">❤️</span><h4>Child-First Approach</h4><p>Patient teachers who make every child feel seen, valued, and excited to learn.</p></div>
+    <div class="why-card"><span class="why-icon">📈</span><h4>Steady Progress</h4><p>Regular progress updates and parent reviews to keep every child on track.</p></div>
+    <div class="why-card"><span class="why-icon">🎓</span><h4>Expert Coaches</h4><p>Certified, experienced coaches who are passionate about every child's growth.</p></div>
+    <div class="why-card"><span class="why-icon">🌟</span><h4>Fun Learning</h4><p>We make every session engaging, joyful and something kids look forward to.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="section-title">Book a Free Trial Class</h2>
+  <p class="section-sub">Fill in the form and we'll call you back to schedule your child's first class absolutely free!</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Contact Aarval Academy</h3>
+      <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><strong>Phone / WhatsApp</strong><span>+91 9445672928</span></div></div>
+      <div class="contact-item"><div class="contact-icon">🌐</div><div class="contact-text"><strong>Website</strong><span>www.aarvalacademy.in</span></div></div>
+      <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><strong>Location</strong><span>Phase-1, Venkateswara Nagar,<br>Perungudi, Chennai - 600096<br><small style="color:var(--muted);font-weight:400">Offline + Online available</small></span></div></div>
+      <a href="https://www.google.com/maps/dir//Aarval+Academy,+Phase-1,+Venkateswara+Nagar,+Perungudi,+Chennai,+Tamil+Nadu+600096" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#39ff14;color:#0a0a0f;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:800;text-decoration:none;margin-bottom:20px;">📍 Get Directions on Google Maps</a>
+      <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><strong>Timings</strong><span>7 Days · Weekday & Weekend<br><small style="color:var(--muted);font-weight:400">Flexible time slots available</small></span></div></div>
+      <div class="social-row">
+        <a href="https://www.facebook.com/profile.php?id=61584329581255" target="_blank" class="social-btn">📘 Facebook</a>
+        <a href="https://www.instagram.com/aarval_academy/" target="_blank" class="social-btn">📸 Instagram</a>
+        <a href="https://wa.me/919445672928" target="_blank" class="social-btn">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--light);border-radius:16px;border:1.5px solid var(--border);padding:48px 32px;text-align:center;">
+      <div style="font-size:56px;margin-bottom:16px;">📋</div>
+      <h3 style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;color:var(--primary);margin-bottom:10px;">Book a Free Trial Class</h3>
+      <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:28px;max-width:320px;">Fill our quick form and we'll call you back to schedule your child's first class absolutely free!</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVF608RQHeC3QL2M83ZiHxIKgLX4Dr3xgBB4llKkC7xIjMHg/viewform?usp=header" target="_blank" style="display:inline-block;background:var(--accent);color:white;padding:14px 36px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:16px;width:100%;box-sizing:border-box;">📝 Fill Enquiry Form</a>
+      <a href="https://wa.me/919445672928" target="_blank" style="display:inline-block;background:#25d366;color:white;padding:14px 36px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;text-decoration:none;width:100%;box-sizing:border-box;">💬 WhatsApp Us Directly</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <img src="logo.png" alt="Aarval Academy">
+        <div class="logo-text" style="color:white">Aarval Academy<span style="color:#f5c800">Academy of Chess & Learning</span></div>
+      </div>
+      <p>A child-focused after-school activity center in Chennai offering Chess, Phonics, Art & Yoga for kids aged 4–14 years.</p>
+      <div class="footer-phone">📞 +91 9445672928</div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="chess.html">Chess Coaching</a></li>
+        <li><a href="#programs">Phonics</a></li>
+        <li><a href="#programs">Art & Craft</a></li>
+        <li><a href="#programs">Kids Yoga</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://www.facebook.com/profile.php?id=61584329581255" target="_blank">Facebook</a></li>
+        <li><a href="https://www.instagram.com/aarval_academy/" target="_blank">Instagram</a></li>
+        <li><a href="https://wa.me/919445672928" target="_blank">WhatsApp</a></li>
+        <li><a href="#contact">Book a Trial</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span style="color:rgba(255,255,255,0.4)">© 2026 Aarval Academy. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.4)">Made with ❤️ for kids in Chennai</span>
+  </div>
+</footer>
+
+</body>
+</html>
