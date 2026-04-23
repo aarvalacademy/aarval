@@ -3,309 +3,1149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chess Program – Aarval Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Aarval Chess Club – Think Deep. Play Smart.</title>
+<meta name="description" content="Join Aarval Chess Club – Chennai's premier chess club for kids aged 4–14. Online & offline coaching, tournaments, and a global chess community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --primary: #1a1a2e;
-    --accent: #4caf7d;
-    --gold: #f5a623;
-    --teal: #0f9b8e;
-    --light: #f8f9fa;
-    --text: #333;
-    --muted: #666;
-    --border: #eee;
-    --hero-bg: #0d0d1a;
+    --gold: #1D9E75;
+    --gold-light: #25C490;
+    --gold-dim: #0F6E56;
+    --black: #08080D;
+    --dark: #111118;
+    --card: #16161F;
+    --card2: #1E1E2A;
+    --cream: #F0E8D8;
+    --muted: #9B93A8;
+    --border: rgba(29,158,117,0.2);
+    
+    
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Nunito',sans-serif; color:var(--text); background:var(--light); }
 
-  nav { background:var(--primary); padding:0 5%; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.3); }
-  .nav-logo { display:flex; align-items:center; gap:10px; padding:11px 0; text-decoration:none; }
-  .nav-logo img { width:44px; height:44px; object-fit:contain; border-radius:10px;  }
-  .logo-text { color:white; font-family:'Poppins',sans-serif; font-size:17px; font-weight:700; line-height:1.15; }
-  .logo-text span { color:var(--gold); font-size:11px; font-weight:600; display:block; letter-spacing:0.5px; }
-  .nav-links { display:flex; gap:6px; list-style:none; }
-  .nav-links a { color:rgba(255,255,255,0.8); text-decoration:none; padding:8px 14px; border-radius:6px; font-size:14px; font-weight:600; transition:all 0.2s; }
-  .nav-links a:hover { background:rgba(255,255,255,0.1); color:white; }
-  .nav-cta { background:var(--accent)!important; color:white!important; padding:8px 18px!important; }
+  html { scroll-behavior: smooth; }
 
-  /* HERO */
-  .chess-hero { position:relative; height:80vh; min-height:480px; display:flex; align-items:flex-end; overflow:hidden; }
-  .hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.4); }
-  .hero-grad { position:absolute; inset:0; background:linear-gradient(to top, rgba(13,13,26,1) 0%, rgba(13,13,26,0.55) 50%, transparent 100%); }
-  .hero-content { position:relative; z-index:2; padding:0 5% 60px; max-width:640px; }
-  .breadcrumb { font-size:13px; color:rgba(255,255,255,0.45); margin-bottom:16px; }
-  .breadcrumb a { color:rgba(255,255,255,0.45); text-decoration:none; }
-  .breadcrumb a:hover { color:var(--gold); }
-  .hero-tag { display:inline-block; background:var(--accent); color:white; padding:8px 20px; border-radius:20px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; box-shadow:0 4px 16px rgba(76,175,125,0.25); }
-  .chess-hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:800; color:white; line-height:1.12; margin-bottom:14px; }
-  .chess-hero h1 em { color:var(--gold); font-style:normal; }
-  .hero-sub { font-size:16px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:26px; max-width:480px; }
-  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
-  .btn-primary { background:var(--accent); color:white; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; transition:all 0.2s; display:inline-block; }
-  .btn-primary:hover { background:#3d9968; transform:translateY(-1px); }
-  .btn-secondary { background:transparent; color:white; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; border:2px solid rgba(255,255,255,0.7); transition:all 0.2s; display:inline-block; }
-  .btn-secondary:hover { border-color:white; }
+  #online, #offline {
+    scroll-margin-top: 170px;
+  }
 
-  /* LEVELS */
-  .levels-bar { background:white; border-bottom:1px solid var(--border); padding:14px 5%; display:flex; gap:8px; flex-wrap:wrap; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-  .lev-lbl { font-size:12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-right:4px; }
-  .lev { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid; }
-  .lev.hi { background:#f0faf5; border-color:rgba(76,175,125,0.25); color:#2d6b4f; }
-  .lev.lo { background:transparent; border-color:var(--border); color:var(--muted); }
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
 
-  /* SECTIONS */
-  section { padding:72px 5%; }
-  .section-label { text-align:center; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
-  .section-title { font-family:'Poppins',sans-serif; font-size:clamp(24px,3.5vw,36px); font-weight:700; text-align:center; color:var(--primary); margin-bottom:14px; line-height:1.25; }
-  .section-sub { text-align:center; color:var(--muted); font-size:15px; max-width:520px; margin:0 auto 48px; line-height:1.6; }
+  /* ── TOP BAR ─────────────────────────────────── */
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    height: 36px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
 
-  /* ABOUT */
-  .about-sec { background:white; }
-  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
-  .about-left h2 { font-family:'Poppins',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--primary); margin-bottom:16px; line-height:1.3; }
-  .about-left h2 em { color:var(--accent); font-style:normal; }
-  .about-left p { color:var(--muted); font-size:15px; line-height:1.75; margin-bottom:14px; }
-  .meta-pills { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
-  .meta-pill { background:#f0faf5; border:1px solid rgba(76,175,125,0.15); color:#2d6b4f; padding:7px 16px; border-radius:20px; font-size:13px; font-weight:700; }
-  .photo-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .photo-grid img { width:100%; border-radius:12px; object-fit:cover; height:190px; border:1px solid var(--border); }
-  .photo-grid img:first-child { grid-column:1/-1; height:250px; }
+  .top-bar a {
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(8,8,13,0.3);
+  }
 
-  /* GAINS */
-  .gains-sec { background:var(--light); }
-  .gains-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; max-width:1100px; margin:0 auto; }
-  .gain-card { background:white; border:1.5px solid var(--border); border-radius:14px; padding:24px 20px; display:flex; gap:14px; transition:all 0.2s; }
-  .gain-card:hover { border-color:rgba(76,175,125,0.2); box-shadow:0 8px 24px rgba(0,0,0,0.07); transform:translateY(-3px); }
-  .g-icon { width:42px; height:42px; background:#f0faf5; border:1px solid rgba(76,175,125,0.15); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-  .g-text h4 { font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; color:var(--primary); margin-bottom:5px; }
-  .g-text p { font-size:13px; color:var(--muted); line-height:1.55; }
+  .top-bar a:hover { border-bottom-color: var(--black); }
 
-  /* HOW */
-  .how-sec { background:white; }
-  .how-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
-  .how-left h2 { font-family:'Poppins',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--primary); margin-bottom:24px; line-height:1.3; }
-  .how-left h2 em { color:var(--accent); font-style:normal; }
-  .how-list { list-style:none; }
-  .how-list li { color:var(--text); font-size:14px; padding:11px 0; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:flex-start; line-height:1.55; }
-  .how-list li:last-child { border:none; }
-  .how-list li::before { content:'→'; color:var(--accent); font-weight:800; flex-shrink:0; margin-top:1px; }
-  .how-photo { position:relative; }
-  .how-photo img { width:100%; border-radius:16px; object-fit:cover; height:400px; border:1px solid var(--border); }
-  .photo-badge { position:absolute; bottom:16px; left:16px; background:white; font-weight:800; border:1px solid rgba(76,175,125,0.2); color:#2d6b4f; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  /* ── NAV ─────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 36px; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(8,8,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
 
-  /* FORMAT */
-  .format-sec { background:var(--light); }
-  .format-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1000px; margin:0 auto; }
-  .f-card { background:white; border:1.5px solid var(--border); border-radius:14px; padding:32px 28px; }
-  .f-card.hi { border-color:rgba(76,175,125,0.2); }
-  .f-card h3 { font-family:'Poppins',sans-serif; font-size:17px; font-weight:700; color:var(--primary); margin-bottom:20px; }
-  .f-rows { list-style:none; }
-  .f-rows li { display:flex; gap:12px; font-size:13px; color:var(--muted); padding:10px 0; border-bottom:1px solid var(--border); line-height:1.5; }
-  .f-rows li:last-child { border:none; }
-  .f-rows li b { color:var(--primary); min-width:100px; flex-shrink:0; font-weight:700; }
-  .check { color:var(--teal); font-weight:800; flex-shrink:0; }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
 
-  /* PROMISE */
-  .promise-sec { background:var(--primary); }
-  .promise-sec .section-title { color:white; }
-  .promise-sec .section-sub { color:rgba(255,255,255,0.5); }
-  .promise-sec .section-label { color:var(--gold); }
-  .promise-row { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto; }
-  .p-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:28px 24px; text-align:left; flex:1; min-width:200px; max-width:260px; transition:all 0.2s; }
-  .p-card:hover { background:rgba(232,160,0,0.08); border-color:rgba(76,175,125,0.15); }
-  .p-card span { font-size:30px; margin-bottom:14px; display:block; }
-  .p-card h4 { font-family:'Poppins',sans-serif; font-size:15px; font-weight:700; color:white; margin-bottom:6px; }
-  .p-card p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.55; }
+  .nav-logo-text {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
 
-  /* CTA */
-  .cta-sec { background:white; text-align:center; }
-  .cta-sec h2 { font-family:'Poppins',sans-serif; font-size:clamp(24px,3.5vw,36px); font-weight:700; color:var(--primary); margin-bottom:10px; }
-  .cta-sec h2 em { color:var(--accent); font-style:normal; }
-  .cta-sec p { color:var(--muted); font-size:15px; margin-bottom:28px; }
-  .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-  .cta-btn-y { background:var(--accent); color:white; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; transition:all 0.2s; display:inline-block; }
-  .cta-btn-y:hover { background:#3d9968; transform:translateY(-1px); }
-  .cta-btn-o { background:#f0f0f0; color:var(--primary); padding:14px 32px; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; border:1.5px solid #ccc; transition:all 0.2s; display:inline-block; }
-  .cta-btn-o:hover { border-color:var(--accent); color:var(--accent); background:#f0faf5; }
-  .cta-meta { margin-top:20px; font-size:14px; color:var(--muted); }
-  .cta-meta a { color:var(--accent); font-weight:700; text-decoration:none; }
+  .nav-logo-sub {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
 
-  .wa-float { position:fixed; bottom:26px; right:26px; z-index:999; background:#25d366; color:white; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 16px rgba(37,211,102,0.4); transition:transform 0.2s; }
-  .wa-float:hover { transform:scale(1.1); }
+  .nav-links {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+  }
 
-  footer { background:#0a0a18; color:rgba(255,255,255,0.5); padding:28px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
-  footer p { font-size:13px; }
-  footer a { color:var(--gold); text-decoration:none; }
-  .foot-links { display:flex; gap:16px; }
-  .foot-links a { color:rgba(255,255,255,0.5); font-size:13px; font-weight:600; text-decoration:none; transition:color 0.2s; }
-  .foot-links a:hover { color:var(--gold); }
+  .nav-links a {
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 0.5px solid transparent;
+  }
 
-  @media(max-width:768px) { .about-grid,.how-grid,.format-grid { grid-template-columns:1fr; } .nav-links { display:none; } .chess-hero { height:auto; } .hero-content { padding:120px 5% 48px; } .photo-grid img { height:150px; } .photo-grid img:first-child { height:200px; } .how-photo img { height:260px; } .promise-row { flex-direction:column; align-items:center; } }
+  .nav-links a:hover { color: var(--cream); }
+
+  .nav-links .btn-gold {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-links .btn-gold:hover {
+    background: var(--gold-light);
+    color: #fff;
+  }
+
+  /* ── HERO ─────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 156px 5vw 80px;
+    text-align: center;
+  }
+
+  .board-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(8,8,13,0.88) 0%, rgba(8,8,13,0.6) 40%, rgba(8,8,13,0.88) 100%),
+      repeating-conic-gradient(rgba(29,158,117,0.07) 0% 25%, rgba(255,255,255,0.02) 25% 50%);
+    background-size: cover, 72px 72px;
+  }
+
+  .board-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(29,158,117,0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 780px;
+  }
+
+  .club-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    border: 0.5px solid var(--gold);
+    border-radius: 40px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .club-badge svg { flex-shrink: 0; }
+
+  h1.hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    color: var(--cream);
+  }
+
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.3rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.22s;
+    cursor: pointer;
+    border: none;
+    font-family: var(--sans);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(240,232,216,0.25);
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 5vw, 64px);
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  /* ── LOGO SECTION ─────────────────────────── */
+  #logo-section {
+    padding: 80px 5vw;
+    text-align: center;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    background: var(--dark);
+  }
+
+  .logo-label {
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+
+  .chess-emblem {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .emblem-ring {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: rgba(29,158,117,0.05);
+  }
+
+  .emblem-ring::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(29,158,117,0.3);
+  }
+
+  .club-name-block { text-align: center; }
+
+  .club-name-top {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: block;
+  }
+
+  .club-name-bottom {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream);
+    font-weight: 300;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .logo-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+
+  .social-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+
+  .social-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    border: 0.5px solid var(--border);
+    color: var(--muted);
+    transition: all 0.2s;
+    background: var(--card);
+  }
+
+  .social-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SECTION TABS ─────────────────────────── */
+  #section-nav {
+    position: sticky;
+    top: 106px;
+    z-index: 90;
+    background: rgba(8,8,13,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 62px;
+  }
+
+  .tab-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 0.5px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.22s;
+    cursor: pointer;
+    background: transparent;
+    font-family: var(--sans);
+  }
+
+  .tab-pill:hover { border-color: rgba(29,158,117,0.5); color: var(--cream); }
+
+  .tab-pill.active {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+    font-weight: 500;
+  }
+
+
+  .tab-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .tab-sep { flex: 1; }
+
+  /* ── CONTENT SECTIONS ─────────────────────── */
+  .content-section {
+    padding: 100px 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-eye {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    color: var(--cream);
+  }
+
+  .section-title em { font-family: var(--sans); font-style: normal; font-weight: 500; color: var(--gold); }
+
+  .section-hook {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--cream);
+    max-width: 660px;
+    line-height: 1.95;
+    margin-bottom: 3rem;
+  }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 3rem;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(29,158,117,0.45);
+    transform: translateY(-3px);
+  }
+
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(29,158,117,0.1);
+    border: 0.5px solid rgba(29,158,117,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .card-text {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.85;
+  }
+
+  /* Hook Banner */
+  .hook-banner {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .hook-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 500;
+    font-style: normal;
+    color: var(--cream);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .hook-quote span { color: var(--gold); }
+
+  /* Pricing / Tier */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 2.5rem;
+  }
+
+  .tier-card {
+    background: var(--card2);
+    border: 0.5px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .tier-card.featured {
+    border-color: var(--gold);
+    background: rgba(29,158,117,0.06);
+  }
+
+  .tier-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .tier-name {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .tier-ages {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .tier-features {
+    list-style: none;
+    font-size: 15px;
+    color: var(--cream);
+    text-align: left;
+    line-height: 1.9;
+  }
+
+  .tier-features li {
+    padding: 5px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .tier-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 10px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  /* Divider between sections */
+  .section-separator {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 0 5vw;
+  }
+
+  /* ── OFFLINE MAP/VIBE ─────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .location-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 24px;
+    padding: 32px;
+  }
+
+  .location-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .location-name {
+    font-family: var(--sans);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .location-addr {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 15px;
+    color: var(--muted);
+    padding: 7px 0;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .detail-row strong { color: var(--cream); font-weight: 500; }
+
+  /* ── CTA BLOCK ────────────────────────────── */
+  #cta {
+    padding: 100px 5vw;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(29,158,117,0.1) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-inner { position: relative; max-width: 640px; margin: 0 auto; }
+
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .cta-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .cta-title em { font-style: italic; color: var(--gold); }
+
+  .cta-sub {
+    font-size: 1.2rem;
+    color: var(--cream);
+    font-weight: 300;
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── FOOTER ───────────────────────────────── */
+  footer {
+    padding: 40px 5vw;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer a { color: var(--cream); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ───────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.7s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.22s; }
+  .delay-3 { animation-delay: 0.36s; }
+  .delay-4 { animation-delay: 0.5s; }
+  .delay-5 { animation-delay: 0.64s; }
+
+  /* Responsive nav */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hook-banner { padding: 28px 24px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
-<a class="wa-float" href="https://wa.me/919445672928" target="_blank">💬</a>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 5H13L9.5 7.5L11 11.5L7 9L3 11.5L4.5 7.5L1 5H5.5Z" fill="#fff"/></svg>
+  Part of <a href="https://aarvalacademy.in" target="_blank">Aarval Academy</a> &nbsp;·&nbsp; Chess · Phonics · Art · Yoga
+</div>
 
+<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="index.html">
-    <img src="logo.png" alt="Aarval Academy">
-    <div class="logo-text">Aarval Academy<span>Academy of Chess & Learning</span></div>
+  <a href="#" class="nav-logo">
+    <!-- King crown chess logo -->
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="#1D9E75" opacity="0.12"/>
+      <rect x="0.5" y="0.5" width="35" height="35" rx="7.5" stroke="#1D9E75" stroke-width="0.8" opacity="0.6"/>
+      <!-- Crown points -->
+      <path d="M8 24 L8 15 L12 19 L18 11 L24 19 L28 15 L28 24 Z" fill="#1D9E75"/>
+      <!-- Crown base -->
+      <rect x="8" y="24" width="20" height="3" rx="1.5" fill="#1D9E75"/>
+      <!-- Crown gems -->
+      <circle cx="18" cy="14" r="1.5" fill="#08080D"/>
+      <circle cx="10" cy="17" r="1" fill="#08080D"/>
+      <circle cx="26" cy="17" r="1" fill="#08080D"/>
+    </svg>
+    <div>
+      <div class="nav-logo-text">Aarval Chess Club</div>
+      <div class="nav-logo-sub">Est. 2025 · Chennai</div>
+    </div>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#programs">Programs</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="https://myaarval.aarvalacademy.in" target="_blank" class="nav-classroom">My Aarval</a></li>
-    <li><a href="index.html#contact" class="nav-cta" style="background:#f5c800!important;color:#0a0a0f!important">Enroll Now</a></li>
+    <li><a href="#online">Online</a></li>
+    <li><a href="#offline" style="color:var(--green);">Offline Classes</a></li>
+    <li><a href="https://aarvalacademy.in">Aarval Academy</a></li>
+    <li><a href="https://wa.me/919445672928" class="btn-gold">Join Club ♟</a></li>
   </ul>
 </nav>
 
-<div class="chess-hero">
-  <img class="hero-img" src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=1280&q=80" alt="Chess at Aarval Academy">
-  <div class="hero-grad"></div>
-  <div class="hero-content">
-    <div class="breadcrumb"><a href="index.html">Home</a> › Chess Program</div>
-    <div class="hero-tag">♟ Flagship Program</div>
-    <h1>Chess That Builds<br><em>Sharp Minds</em> &<br>Future Champions</h1>
-    <p class="hero-sub">A slow, strong, and systematic approach understanding over memorization, confidence over pressure, growth over speed.</p>
-    <div class="hero-btns">
-      <a href="index.html#contact" class="btn-primary">Book Free Demo Class</a>
-      <a href="tel:9445672928" class="btn-secondary">📞 Call Us</a>
+<!-- HERO -->
+<section id="hero">
+  <div class="board-bg"></div>
+  <div class="board-glow"></div>
+  <div class="hero-inner">
+    <div class="club-badge fade-up">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#1D9E75" stroke-width="1"/><path d="M4 9V7c0-1 .5-1.5 2-3L8 3c-1.5.5-2 1.5-2 2.5 0 .5.2 1 .5 1.5L5.5 9H4Z" fill="#1D9E75"/></svg>
+      Aarval Chess Club · Est. 2025 · Chennai
     </div>
-  </div>
-</div>
+    <h1 class="hero-title fade-up delay-1" style="font-size:clamp(2rem,5vw,3.8rem); line-height:1.1;">
+      Online &amp; Offline Chess Classes<br>for Kids <em>(5–14 yrs)</em>
+    </h1>
+    <p class="fade-up delay-2" style="font-family:var(--sans); font-size:clamp(1.1rem,2.5vw,1.5rem); font-style:normal; color:var(--gold); margin-bottom:1.4rem; font-weight:500; letter-spacing:0.01em;">
+      Where Every Move Shapes a Champion
+    </p>
 
-<div class="levels-bar">
-  <span class="lev-lbl">Levels:</span>
-  <span class="lev hi">Primary Chess (Age 4+)</span>
-  <span class="lev lo">Beginner</span>
-  <span class="lev lo">Intermediate</span>
-  <span class="lev lo">Advanced</span>
-  <span class="lev lo">Online & Offline</span>
-</div>
 
-<section class="about-sec">
-  <div class="about-grid">
-    <div class="about-left">
-      <p class="section-label" style="text-align:left;">About the Program</p>
-      <h2>Chess Is More Than<br>a Game at <em>Aarval</em></h2>
-      <p>At Aarval Academy, chess is a powerful tool to build thinking minds. We nurture young learners with patience, precision, and purpose helping every child grow at their own pace.</p>
-      <p>Our coaches focus on understanding over memorization and long-term growth over shortcuts. Every session is a step towards becoming a stronger, more confident thinker.</p>
-      <div class="meta-pills">
-        <span class="meta-pill">Age 5+</span>
-        <span class="meta-pill">Online & Offline</span>
-        <span class="meta-pill">Chennai</span>
-        <span class="meta-pill">Small Batches</span>
+    <div class="fade-up delay-3" style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:2rem; margin-top:0.5rem;">
+      <span style="display:flex; align-items:center; gap:7px; background:var(--card); border:0.5px solid var(--border); border-radius:30px; padding:7px 16px; font-size:15px; color:var(--cream);">
+        <span style="color:var(--gold);">✔</span> Small batch · Max 8 students
+      </span>
+      <span style="display:flex; align-items:center; gap:7px; background:var(--card); border:0.5px solid var(--border); border-radius:30px; padding:7px 16px; font-size:15px; color:var(--cream);">
+        <span style="color:var(--gold);">✔</span> Personal attention
+      </span>
+      <span style="display:flex; align-items:center; gap:7px; background:var(--card); border:0.5px solid var(--border); border-radius:30px; padding:7px 16px; font-size:15px; color:var(--cream);">
+        <span style="color:var(--gold);">✔</span> Beginner to tournament-level training
+      </span>
+      <span style="display:flex; align-items:center; gap:7px; background:var(--card); border:0.5px solid var(--border); border-radius:30px; padding:7px 16px; font-size:15px; color:var(--cream);">
+        <span style="color:var(--gold);">🏆</span> Tournament placements
+      </span>
+    </div>
+
+    <div class="hero-cta fade-up delay-4">
+      <a href="#online" class="btn btn-primary">♟ Online Classes</a>
+      <a href="#offline" class="btn btn-primary">🏫 Offline Classes</a>
+    </div>
+    <div class="hero-stats fade-up delay-5">
+      <div class="stat">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Kids Coached</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4–14</span>
+        <span class="stat-label">Age Group</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">7 Days</span>
+        <span class="stat-label">Flexible Slots</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Personal Attention</span>
       </div>
     </div>
-    <div class="photo-grid">
-      <img src="chess-coach.jpg.jpeg" alt="Chess class at Aarval Academy">
-      <img src="chess-kids1.jpg.jpeg" alt="Kids playing chess">
-      <img src="chess-kids2.jpg.jpeg" alt="Chess coaching session">
+  </div>
+</section>
+
+<!-- CHESS CLUB LOGO IDENTITY -->
+<section id="logo-section">
+  <p class="logo-label">Our Club Identity</p>
+  <div class="chess-emblem">
+    <!-- Main Club Logo SVG -->
+    <div class="emblem-ring">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield outline -->
+        <path d="M45 8 L72 18 L72 46 Q72 64 45 82 Q18 64 18 46 L18 18 Z" fill="rgba(201,162,39,0.08)" stroke="#1D9E75" stroke-width="1.5"/>
+        <!-- Inner shield line -->
+        <path d="M45 14 L66 22 L66 46 Q66 60 45 75 Q24 60 24 46 L24 22 Z" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.4"/>
+        <!-- Crown inside shield -->
+        <path d="M33 53 L33 44 L38 48.5 L45 38 L52 48.5 L57 44 L57 53 Z" fill="#1D9E75"/>
+        <rect x="33" y="53" width="24" height="4" rx="2" fill="#1D9E75"/>
+        <!-- Crown gems -->
+        <circle cx="45" cy="41" r="2" fill="#08080D"/>
+        <circle cx="35" cy="46" r="1.3" fill="#08080D"/>
+        <circle cx="55" cy="46" r="1.3" fill="#08080D"/>
+        <!-- Stars flanking -->
+        <path d="M14 38l1 2.2 2.2 1-2.2 1L14 44.4l-1-2.2L11 41.2l2.2-1Z" fill="#1D9E75" opacity="0.6"/>
+        <path d="M76 38l1 2.2 2.2 1-2.2 1L76 44.4l-1-2.2L73 41.2l2.2-1Z" fill="#1D9E75" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="club-name-block">
+      <span class="club-name-top">Aarval Chess Club</span>
+      <div class="logo-divider" style="margin-top:10px; margin-bottom:10px;"></div>
+      <span class="club-name-bottom">Think Deep · Play Smart · Grow Strong</span>
+    </div>
+  </div>
+
+  <div class="social-row">
+    <a href="https://www.instagram.com/aarval_chess_club/" class="social-chip" target="_blank">
+      📸 @aarval_chess_club · Instagram
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61584329581255" class="social-chip" target="_blank">
+      📘 Aarval Chess Club · Facebook
+    </a>
+    <a href="https://wa.me/919445672928" class="social-chip" target="_blank">
+      💬 WhatsApp Group
+    </a>
+  </div>
+</section>
+
+<!-- STICKY SECTION TABS -->
+<div id="section-nav">
+  <a href="#online" class="tab-pill active" id="tab-online">
+    <div class="tab-dot"></div>
+    ♟ Online Classes
+  </a>
+  <a href="#offline" class="tab-pill active" id="tab-offline">
+    <div class="tab-dot"></div>
+    🏫 Offline Classes
+  </a>
+  <div class="tab-sep"></div>
+  <a href="https://wa.me/919445672928" class="btn btn-primary" style="padding: 9px 22px; font-size: 14px;">
+    Free Demo ↗
+  </a>
+</div>
+
+<!-- ══════════════════ ONLINE SECTION ═════════════════════ -->
+<section id="online">
+  <div class="content-section">
+    <p class="section-eye">♟ Online Chess Classes</p>
+    <h2 class="section-title">Live Classes at Home —<br><em>No Travel, No Stress.</em></h2>
+    <p class="section-hook">
+      Your child joins a live video class with a real coach — not a recorded video, not an app. The coach sees their moves, corrects mistakes on the spot, and knows your child by name. You get a weekly update on exactly how they're doing.
+    </p>
+
+    <!-- Hook Banner -->
+    <div class="hook-banner">
+      <div class="hook-quote">
+        Pick up a <span>more focused kid</span> after every class.
+      </div>
+      <div>
+        <a href="https://wa.me/919445672928" class="btn btn-primary">Book Free Demo Class</a>
+      </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="card-icon">📹</div>
+        <div class="card-title">Real Coach, Live on Screen</div>
+        <div class="card-text">Every class is live — not pre-recorded. Your child's coach watches each move in real time, corrects mistakes immediately, and explains the why behind every decision.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🕐</div>
+        <div class="card-title">Pick a Time That Works for You</div>
+        <div class="card-text">Morning before school, evening after homework, weekends — we have slots 7 days a week. No fixed batch forcing you into a time that doesn't fit.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">You'll Know Exactly How Your Child Is Doing</div>
+        <div class="card-text">Parents get regular progress updates — not vague "doing well" messages. You'll see which concepts your child has mastered and what's being worked on next.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">👶</div>
+        <div class="card-title">Safe for Young Kids Too</div>
+        <div class="card-text">We teach from age 4. Our Primary Chess program is designed for little ones — short sessions, simple concepts, and a calm coach who never makes a child feel rushed or wrong.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Kids Actually Enjoy the Classes</div>
+        <div class="card-text">No boring lectures. Sessions include puzzles, practice games, and challenges that feel like play — so your child asks to attend, not the other way around.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">📱</div>
+        <div class="card-title">Practice Between Classes Too</div>
+        <div class="card-text">Through the My Aarval portal, your child gets daily puzzles and can review their syllabus anytime. Learning doesn't stop when the class ends.</div>
+      </div>
+    </div>
+
+    <!-- Online Tiers -->
+    <p class="section-eye" style="margin-bottom: 1.2rem;">Which Level is My Child?</p>
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-name">Just Starting Out</div>
+        <div class="tier-ages">Age 4 – 6 · Never touched a chess piece</div>
+        <ul class="tier-features">
+          <li>Learn the name and moves of each piece</li>
+          <li>Simple checkmates step by step</li>
+          <li>Short 30-min sessions — right for young attention spans</li>
+          <li>Parent can sit with the child during class</li>
+        </ul>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Knows the Basics, Ready to Grow</div>
+        <div class="tier-ages">Age 6 – 12 · Knows how pieces move</div>
+        <ul class="tier-features">
+          <li>Learn to plan 2–3 moves ahead</li>
+          <li>Spot threats before they happen</li>
+          <li>Weekly puzzles to sharpen thinking</li>
+          <li>Friendly club matches for experience</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Serious About Competing</div>
+        <div class="tier-ages">Age 10 – 14 · Wants to win tournaments</div>
+        <ul class="tier-features">
+          <li>Deep strategy and opening preparation</li>
+          <li>Study real grandmaster games</li>
+          <li>Full tournament preparation support</li>
+          <li>Rating-focused structured training</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="https://wa.me/919445672928" class="btn btn-primary" style="margin-right:12px;">💬 WhatsApp to Enroll</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVF608RQHeC3QL2M83ZiHxIKgLX4Dr3xgBB4llKkC7xIjMHg/viewform" class="btn btn-outline" target="_blank">📝 Fill Enquiry Form</a>
     </div>
   </div>
 </section>
 
-<section class="gains-sec">
-  <p class="section-label">Benefits</p>
-  <h2 class="section-title">What Children Gain Through Chess</h2>
-  <p class="section-sub">Every session builds skills that go far beyond the board.</p>
-  <div class="gains-grid">
-    <div class="gain-card"><div class="g-icon">🧠</div><div class="g-text"><h4>Logical Thinking</h4><p>Chess trains the brain to think ahead, evaluate options, and make smart decisions.</p></div></div>
-    <div class="gain-card"><div class="g-icon">🎯</div><div class="g-text"><h4>Focus & Patience</h4><p>Every move requires concentration children learn to stay calm under pressure.</p></div></div>
-    <div class="gain-card"><div class="g-icon">⚔️</div><div class="g-text"><h4>Threat Recognition</h4><p>Identifying threats and opportunities a skill that goes far beyond the board.</p></div></div>
-    <div class="gain-card"><div class="g-icon">💾</div><div class="g-text"><h4>Improved Memory</h4><p>Patterns, openings, and endgames strengthen memory and problem-solving ability.</p></div></div>
-    <div class="gain-card"><div class="g-icon">🏆</div><div class="g-text"><h4>Confidence & Resilience</h4><p>Handling wins, losses, and challenges builds real emotional strength.</p></div></div>
-    <div class="gain-card"><div class="g-icon">♟️</div><div class="g-text"><h4>Board Awareness</h4><p>Strong endgame understanding and full board awareness develop steadily.</p></div></div>
-  </div>
-</section>
+<div class="section-separator"></div>
 
-<section class="how-sec">
-  <div class="how-grid">
-    <div class="how-left">
-      <p class="section-label" style="text-align:left;">Methodology</p>
-      <h2>How We <em>Teach</em> Chess</h2>
-      <ul class="how-list">
-        <li>Minimal-distraction learning environment</li>
-        <li>Teaching tailored to each child's current knowledge and pace</li>
-        <li>Concept-based coaching no rushed shortcuts</li>
-        <li>Regular practice games in a pressure-free setting</li>
-        <li>Fun challenges to keep children engaged and motivated</li>
-        <li>Personalized guidance based on each child's progress</li>
-        <li>Weekly confirmations to ensure full attendance</li>
-        <li>Parent updates on progress, strengths, and areas to improve</li>
-        <li>📱 Students can track their progress, view syllabus & practice puzzles anytime</li>
-      </ul>
+<!-- ══════════════════ OFFLINE SECTION ════════════════════ -->
+<section id="offline">
+  <div class="content-section">
+    <p class="section-eye">🏫 Offline – Chennai Centre</p>
+    <h2 class="section-title">Drop Your Child Off.<br><em>Pick Up a More Focused Kid.</em></h2>
+    <p class="section-hook">
+      Our Chennai centre is a quiet, dedicated chess space — no distractions, no screens, just focused learning with a coach who knows your child's name, strengths, and where they need to improve. You'll get an update every single class.
+    </p>
+
+    <!-- Hook Banner -->
+    <div class="hook-banner">
+      <div class="hook-quote">
+        "My son used to give up whenever something was hard.<br>After 3 months, <span>he sits with problems until he solves them.</span>"
+      </div>
+      <div>
+        <a href="https://wa.me/919445672928" class="btn btn-primary">Book Offline Trial</a>
+      </div>
     </div>
-    <div class="how-photo">
-      <img src="chess-coach.jpg.jpeg" alt="Chess coaching">
-      <div class="photo-badge">⭐ Expert Coaches · Small Batches · Personal Attention</div>
+
+    <div class="two-col">
+      <!-- Location -->
+      <div class="location-card">
+        <div class="location-icon">📍</div>
+        <div class="location-name">Aarval Academy, Chennai</div>
+        <div class="location-addr">
+          Phase-1, Venkateswara Nagar,<br>
+          Perungudi, Chennai – 600096
+        </div>
+        <div class="detail-row">📞 <strong>+91 94456 72928</strong></div>
+        <div class="detail-row">🕐 <strong>7 Days</strong> · Weekday & Weekend · Flexible slots</div>
+        <div class="detail-row">👶 <strong>Age 4 and above</strong> · All levels welcome</div>
+        <div class="detail-row">👥 <strong>Small batches</strong> · Every child gets personal attention</div>
+        <br>
+        <a href="https://www.google.com/maps/dir//Aarval+Academy,+Phase-1,+Venkateswara+Nagar,+Perungudi,+Chennai,+Tamil+Nadu+600096" class="btn btn-outline" style="font-size:13px; padding: 10px 20px;" target="_blank">📍 Get Directions</a>
+      </div>
+
+      <!-- Why offline matters -->
+      <div>
+        <div class="cards-grid" style="grid-template-columns: 1fr;">
+          <div class="feature-card" style="padding: 22px;">
+            <div class="card-title">Your Child Gets Individual Attention</div>
+            <div class="card-text">We keep batch sizes small on purpose. The coach knows exactly where your child is struggling and adjusts every session for them — not for the class average.</div>
+          </div>
+          <div class="feature-card" style="padding: 22px;">
+            <div class="card-title">You'll Know What Happened in Every Class</div>
+            <div class="card-text">When you pick up your child, the coach will tell you what was covered, what clicked, and what to expect next. No surprises, no guessing.</div>
+          </div>
+          <div class="feature-card" style="padding: 22px;">
+            <div class="card-title">They Play Real Games Against Real Kids</div>
+            <div class="card-text">Practising with classmates teaches your child to handle pressure, think under time, and learn from losing — skills no app can teach.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Offline specifics -->
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="card-icon">📵</div>
+        <div class="card-title">No Phones, No Distractions</div>
+        <div class="card-text">Our centre is a focused environment. No social media, no YouTube, no notifications — just chess. Your child gets 45–60 minutes of real, deep concentration.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🧘</div>
+        <div class="card-title">Builds Patience — For School Too</div>
+        <div class="card-text">Parents regularly tell us their child became calmer, more patient with homework, and better at handling setbacks. Chess changes how kids approach problems everywhere.</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🏆</div>
+        <div class="card-title">We Prepare Them for Tournaments</div>
+        <div class="card-text">When your child is ready, we prepare them fully for school and district tournaments — rules, time pressure, opponent reading — so they walk in confident, not anxious.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="https://wa.me/919445672928" class="btn btn-primary" style="margin-right:12px;">💬 Reserve a Free Trial Seat</a>
+      <a href="https://www.google.com/maps/dir//Aarval+Academy,+Phase-1,+Venkateswara+Nagar,+Perungudi,+Chennai" class="btn btn-outline" target="_blank">📍 Find Us on Maps</a>
     </div>
   </div>
 </section>
 
-<section class="format-sec">
-  <p class="section-label">Program Details</p>
-  <h2 class="section-title">Class Format & Demo Session</h2>
-  <p class="section-sub">Everything you need to know before enrolling.</p>
-  <div class="format-grid">
-    <div class="f-card">
-      <h3>🗓️ Class Format</h3>
-      <ul class="f-rows">
-        <li><b>Age Group</b> 5 years and above</li>
-        <li><b>Mode</b> Online & Offline classes</li>
-        <li><b>Batch Size</b> Small groups for better personal attention</li>
-        <li><b>Schedule</b> 7 Days · Weekday & Weekend · Flexible time slots</li>
-        <li><b>Location</b> Chennai centers + Online anywhere</li>
-      </ul>
+<!-- CTA BLOCK -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <p class="cta-eyebrow">Try It First — No Commitment</p>
+    <h2 class="cta-title">One Free Class.<br><em>See the Difference Yourself.</em></h2>
+    <p class="cta-sub">Bring your child for one free demo class — online or at our Chennai centre. No fees, no forms, no pressure. If you see the difference, you'll know. Most parents enroll the same week.</p>
+    <div class="hero-cta">
+      <a href="https://wa.me/919445672928" class="btn btn-primary">💬 WhatsApp to Book Free Class</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVF608RQHeC3QL2M83ZiHxIKgLX4Dr3xgBB4llKkC7xIjMHg/viewform" class="btn btn-outline" target="_blank">📝 Fill Enquiry Form</a>
     </div>
-    <div class="f-card hi">
-      <h3>🎯 Demo Session Includes</h3>
-      <ul class="f-rows">
-        <li><span class="check">✓</span> Friendly introduction to chess concepts</li>
-        <li><span class="check">✓</span> Activities tailored to your child's current level</li>
-        <li><span class="check">✓</span> A fun practice game in a relaxed environment</li>
-        <li><span class="check">✓</span> Coach assessment of your child's learning style</li>
-        <li><span class="check">✓</span> Q&A session for parents</li>
-        <li><span style="color:var(--accent);font-weight:800">★</span> <span style="color:var(--accent);font-weight:700">100% Free No commitment needed</span></li>
-      </ul>
-    </div>
+    <p style="font-size:13px; color: var(--muted); margin-top:1.5rem;">📞 <a href="tel:9445672928" style="color:var(--gold); text-decoration:none;">+91 94456 72928</a> · Perungudi, Chennai · Online Available Everywhere</p>
   </div>
 </section>
 
-<section class="promise-sec">
-  <p class="section-label">Our Promise</p>
-  <h2 class="section-title">We Train Them to Think Deep,<br>Play Smart & Improve Steadily</h2>
-  <p class="section-sub">We don't push children to play fast. Every child's journey is unique and we honour that.</p>
-  <div class="promise-row">
-    <div class="p-card"><span>🐢</span><h4>No Rush, Ever</h4><p>We never push for speed. Deep understanding always comes first.</p></div>
-    <div class="p-card"><span>📈</span><h4>Steady Progress</h4><p>Consistent, measurable improvement tracked and shared with parents.</p></div>
-    <div class="p-card"><span>❤️</span><h4>Child-First</h4><p>Every child feels seen, encouraged, and excited to come back.</p></div>
-  </div>
-</section>
-
-<section class="cta-sec">
-  <h2>Ready to Start the <em>Chess Journey?</em></h2>
-  <p>Book a free demo class no payment, no pressure. Just chess.</p>
-  <div class="cta-btns">
-    <a href="index.html#contact" class="cta-btn-y">Book Free Demo Class</a>
-    <a href="https://wa.me/919445672928" target="_blank" class="cta-btn-o">💬 WhatsApp Us</a>
-  </div>
-  <div class="cta-meta">📞 <a href="tel:9445672928">944-567-2928</a> &nbsp;·&nbsp; 📍 Chennai Offline & Online</div>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 Aarval Academy · <a href="https://aarvalacademy.in">aarvalacademy.in</a></p>
-  <div class="foot-links">
-    <a href="https://www.facebook.com/profile.php?id=61584329581255" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/aarval_academy/" target="_blank">Instagram</a>
-    <a href="https://wa.me/919445672928" target="_blank">WhatsApp</a>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <svg width="22" height="22" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#1D9E75" stroke-width="1"/><path d="M9 22v-1.5c0-1 .5-1.5 1.5-1.5h7c1 0 1.5.5 1.5 1.5V22H9Z" fill="#1D9E75"/><path d="M11 19c0-3.5 1-5.5 3-7.5-.5-.3-1.5-.8-1.5-2 0-1.5 1-2.5 2.5-3 .3 1 .7 1.5 1.5 1.5.5 0 1-.3 1.5-.5-.5 1-.5 2 .5 3-1 .8-1.5 1.8-1.5 3 0 1.2.3 3.2.5 5.5H11Z" fill="#1D9E75" opacity="0.9"/></svg>
+    <span><strong style="color:var(--cream);">Aarval Chess Club</strong> · Part of <a href="https://aarvalacademy.in" style="color:var(--gold);">Aarval Academy</a></span>
   </div>
+  <div style="display:flex; gap:20px;">
+    <a href="https://www.instagram.com/aarval_chess_club/">Instagram</a>
+    <a href="https://www.facebook.com/profile.php?id=61584329581255">Facebook</a>
+    <a href="https://wa.me/919445672928">WhatsApp</a>
+  </div>
+  <span>© 2026 Aarval Academy · Chennai</span>
 </footer>
+
+<script>
+  const OFFSET = 135;
+
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  document.getElementById('tab-online').addEventListener('click', function(e) {
+    e.preventDefault();
+    scrollToSection('online');
+  });
+
+  document.getElementById('tab-offline').addEventListener('click', function(e) {
+    e.preventDefault();
+    scrollToSection('offline');
+  });
+
+  // Also fix any other anchor links pointing to #online / #offline
+  document.querySelectorAll('a[href="#online"], a[href="#offline"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      scrollToSection(this.getAttribute('href').slice(1));
+    });
+  });
+
+  // Both tabs stay highlighted always
+</script>
 
 </body>
 </html>
